@@ -12,49 +12,7 @@ interface propsParms {
   };
 }
 
-export async function generateMetaData({
-  params
-}:propsParms):Promise<Metadata> {
-  try {
-    const response:Gameprops = await fetch(
-      `${process.env.NEXT_API_URL}/next-api/?api=game&id=${params.id}`,
-      { next:{revalidate:60}}
-    )
-      .then((res)=>res.json())
-      .catch(()=>{
-        return {
-          title: "JPGames - Descubra Jogos Incriveis para se Divertir",
-        };
-      });
 
-
-      return{
-        title:response.title,
-        description:`${response.description.slice(0,100)}...`,
-        openGraph:{
-          title:response.title,
-          images:response.image_url
-        },
-        robots:{
-          index:true,
-          follow:true,
-          nocache:true,
-          googleBot:{
-            index:true,
-            follow:true,
-            noimageindex:true
-          }
-        }
-      }
-
-
-
-  } catch(err) {
-    return{
-      title:"JPGames - Descubra Jogos Incriveis para se Divertir",
-    };
-  }
-}
 
 async function GetData(id: string) {
   try {
